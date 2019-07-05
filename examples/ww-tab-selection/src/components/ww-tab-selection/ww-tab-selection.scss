@@ -1,0 +1,35 @@
+@mixin inheritanceBlock {
+  font-family: initial;
+  /* ...other inherited properties */
+}
+
+.ww-tab-selection {
+  @include inheritanceBlock();
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  &__tab {
+    cursor: pointer;
+    display: block;
+    padding: 10px 15px;
+    margin-right: 5px;
+    color: white;
+    background-color: black;
+    transition: transform 400ms;
+    font-family: var(--tab-font-family, Arial, Helvetica, sans-serif);
+
+    &:hover,
+    &.selected {
+      transform: translateY(-5px);
+    }
+
+    &.selected {
+      box-shadow: 0px 5px 0px 0px rgba(255, 255, 255, 1);
+    }
+
+    &:last-child {
+      margin-right: unset;
+    }
+  }
+}

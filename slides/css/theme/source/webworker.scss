@@ -1,0 +1,73 @@
+/**
+ * Solarized Dark theme for reveal.js.
+ * Author: Achim Staebler
+ */
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+// Include theme-specific fonts
+@import url("https://fonts.googleapis.com/css?family=Squada+One");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+
+/**
+  * Webworker Theme - created by Sebastian Oley
+  */
+
+// Webworker CI colors
+$schwarz: #000000; // -> logo schwarz
+$weiss: #ffffff; // -> logo weiß
+$mandarine: #f7b033; // -> sonderfabe: auszeichnung
+$msdos: #78ff45; // -> sonderfabe: key visual
+$nachtblau: #002e3b;
+$marineblau: #135575;
+$petrol: #0c8da2;
+$tuerkies: #1c9890;
+$dunkelgruen: #0fa075;
+$golf: #24c247;
+$kickergruen: #77ff45;
+$gradient: linear-gradient(
+  150deg,
+  #87bb2c 0%,
+  #52aa62 25%,
+  #209b8c 50%,
+  #197782 75%,
+  #145677 100%
+);
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: $gradient;
+$mainFont: "Open Sans", sans-serif;
+$mainColor: $weiss;
+$headingFont: "Squada One", Impact, sans-serif;
+$headingTextTransform: none;
+$linkColor: $msdos;
+$linkColorHover: lighten($linkColor, 24%);
+$selectionBackgroundColor: $msdos;
+$selectionColor: $weiss;
+
+// custom classes
+.ww-branding {
+  position: fixed;
+  right: 30px;
+  top: 30px;
+  height: 60px;
+  filter: invert(1) opacity(60%);
+  cursor: pointer;
+  transition: filter 200ms;
+
+  &:hover {
+    filter: invert(1) opacity(100%);
+  }
+}
+
+.ww-text-bg {
+  background-color: $schwarz;
+  padding: 0 0.16em;
+}
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------

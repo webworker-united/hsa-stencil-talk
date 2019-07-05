@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Stencil and Webcompoents</title>
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/webworker.css" />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css" />
+
+    <!-- font awesome -->
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"
+      integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "css/print/pdf.css"
+        : "css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Intro -->
+        <section data-background="/content/ww-info/ww-intro.svg"></section>
+
+        <section data-background="/content/ww-info/ww-facts.svg"></section>
+
+        <section data-background="/content/ww-info/ww-units.svg"></section>
+
+        <section data-background="/content/ww-info/ww-stack.svg"></section>
+
+        <!-- Intro -->
+        <section>
+          <h1><span class="ww-text-bg">Stenciljs</span></h1>
+          <h4>
+            <span class="ww-text-bg"
+              >The magical, reusable web component compiler</span
+            >
+          </h4>
+        </section>
+
+        <!-- Yet another Library -->
+        <section
+          data-background="https://media.giphy.com/media/l378AEZceMwWboAQE/giphy.gif"
+        >
+          <h2><span class="ww-text-bg">...yet another js framework?</span></h2>
+        </section>
+
+        <!-- Webcomponents 101 -->
+        <section>
+          <h2><span class="ww-text-bg">Webcomponents 101</span></h2>
+          <p>= Custom Elements</p>
+          <p>+ Shadow DOM</p>
+          <p>+ HTML templates</p>
+        </section>
+
+        <!-- Custom Elements API -->
+        <section>
+          <!-- Usage -->
+          <section>
+            <h3>Custom Elements</h3>
+            <pre><code class="html" data-trim data-line-numbers="4,7">
+              &lt;!DOCTYPE html&gt;
+              &lt;html&gt;
+                &lt;head&gt;
+                  &lt;script src="./my-custom-element.js"&gt;&lt;/script&gt;
+                &lt;/head&gt;
+                &lt;body&gt;
+                  &lt;my-custom-element&gt;&lt;/my-custom-element&gt;
+                &lt;/body&gt;
+              &lt;/html&gt;
+            </code></pre>
+          </section>
+
+          <!-- Properties -->
+          <section>
+            <h3>Custom Properties</h3>
+            <pre><code class="html" data-trim data-line-numbers="2,3,8-12">
+                &lt;user-control-panel
+                  first-name="Luke"
+                  last-name="Skywalker"
+                &gt;&lt;/user-control-panel&gt;
+                &lt;script&gt;
+                const userControlPanel =
+                      document.querySelector("user-control-panel");
+                userControlPanel.friends = [
+                  { firstName: 'Leya', lastName: 'Organa' },
+                  { firstName: 'Han', lastName: 'Solo' },
+                  { firstName: 'Chewbacca', lastName: '' },
+                ];
+                &lt;/script&gt;
+              </code></pre>
+            <small class="fragment"
+              ><strong>Important:</strong> firstName ↔ first-name</small
+            >
+          </section>
+
+          <!-- Events -->
+          <section>
+            <h3>Custom Events</h3>
+            <pre><code class="js" data-trim data-line-numbers="3-10">
+              const userControlPanel =
+                    document.querySelector("user-control-panel");
+              userControlPanel.addEventListener("signOff", $event => {
+                const user = $event.detail;
+                someService.signOff(user);
+              });
+
+              // of course you can also transform these events
+              // to observables when using rxjs:
+              const signOff$ = fromEvent(userControlPanel, 'signOff');
+            </code></pre>
+            <small class="fragment">Properties + Events = I/O</small>
+          </section>
+        </section>
+
+        <!-- Shadow DOM -->
+        <section>
+          <!-- Examples -->
+          <section>
+            <h3>Shadow DOM</h3>
+            <pre><code class="html" data-trim data-line-numbers>
+              &lt;div class="wrapper"&gt;
+                &lt;button id="outside" class="danger"&gt;Submit&lt;/button&gt;
+                &lt;my-custom-element&gt;
+                  #shadow-root
+                  | &lt;button id="inside" class="danger"&gt;Cancel&lt;/button&gt;
+                &lt;/my-custom-element&gt;
+              &lt;/div&gt;
+            </code></pre>
+            <pre><code class="css" data-trim data-line-numbers>
+              .danger {
+                background-color: firebrick; /* applies only to #outside */
+              }
+
+              button {
+                border-radius: 50%; /* applies only to #outside as well */
+              }
+
+              .wrapper {
+                /* this also applies to #inside, if not overridden
+                   -&gt; inheritance does not stop at shadow DOM */
+                font-family: Arial, Helvetica, sans-serif;
+              }
+            </code></pre>
+          </section>
+
+          <!-- Piercing Selectors -->
+          <section>
+            <h3>(Deprecated) Piercing Selectors</h3>
+            <pre><code class="css" data-trim data-line-numbers="1,3,7">
+                /* deprecated - DON'T USE THESE! */
+
+                /deep/ .danger {
+                  background-color: firebrick;
+                }
+
+                ::shadow .danger {
+                  background-color: firebrick;
+                }
+            </code></pre>
+            <small class="fragment">
+              <a
+                href="https://drafts.csswg.org/css-shadow-parts-1/"
+                target="_blank"
+                >::part and ::theme</a
+              >
+              exist as a draft and may be available sometime in the future.<br />
+              <a
+                href="https://meowni.ca/posts/part-theme-explainer/"
+                target="_blank"
+                >Here</a
+              >
+              is an article about how they could look in action.<br />
+              ...very much WIP at this point.
+            </small>
+          </section>
+
+          <!-- CSS Vars and @apply -->
+          <section>
+            <h3>Using CSS Variables / @apply</h3>
+            <pre><code class="css" data-trim data-line-numbers="1,4,5,8,11-13">
+                /* currently the best option: */
+
+                :root {
+                  --danger-color: firebrick;
+                  --danger: { background-color: firebrick }
+                }
+
+                /* the .danger class declared INSIDE the webcomponent: */
+
+                .danger {
+                  background-color: var(--danger-color, crimson);
+                  /* or */
+                  @apply --danger;
+                }
+            </code></pre>
+            <small class="fragment">
+              → Too abstract and tedious to implement<br />
+              → Not the best browser support 💩<br />
+              →
+              <a
+                href="https://www.smashingmagazine.com/2016/12/styling-web-components-using-a-shared-style-sheet/"
+                target="_blank"
+                >Read more</a
+              >
+            </small>
+          </section>
+        </section>
+
+        <!-- Templates and Slots -->
+        <section>
+          <!-- Examples -->
+          <section>
+            <h3>Templates and Slots</h3>
+            <pre><code class="html" data-trim data-line-numbers="2,6,7,11-13">
+                <!-- templates can be used to create web components -->
+                &lt;template&gt;
+                  &lt;span&gt;Hello World!&lt;/span&gt;
+
+                  <!-- define slots inside your web component -->
+                  &lt;slot name="slot-1"&gt;&lt;/slot&gt;
+                &lt;/template&gt;
+
+                <!-- inject content -->
+                &lt;my-component&gt;
+                  &lt;div slot="slot-1"&gt;
+                    I get injected into slot-1 of my-component.
+                  &lt;/div&gt;
+                &lt;/my-component&gt;
+            </code></pre>
+            <small class="fragment">
+              → Since slots get injected, they can be styled from outside
+            </small>
+          </section>
+        </section>
+
+        <!-- browser support -->
+        <section>
+          <section
+            data-background="https://media.giphy.com/media/y3QOvy7xxMwKI/giphy.gif"
+          >
+            <h3>
+              <span class="ww-text-bg">But... what about browser support?</span>
+            </h3>
+          </section>
+          <section
+            data-background-iframe="https://www.webcomponents.org/"
+            data-background-interactive
+          ></section>
+        </section>
+
+        <!-- benefits -->
+        <section>
+          <section>
+            <img
+              src="https://i.imgur.com/2iWKeqv.png"
+              alt="Stencil Logo"
+              style="background:none; border:none; box-shadow:none; height: 80px;"
+            />
+          </section>
+
+          <section>
+            <h3>Whats so great about Stencil?</h3>
+            <ul>
+              <li class="fragment">Based on Typescript ❤️</li>
+              <li class="fragment">Uses JSX</li>
+              <li class="fragment">Very performant</li>
+              <li class="fragment">Polyfills included</li>
+              <li class="fragment">Tooling / DX</li>
+              <li class="fragment">Testing (Jest) included</li>
+              <li class="fragment">Backed by Ionic Team</li>
+            </ul>
+            <p>
+              <small class="fragment">
+                → <a href="https://stenciljs.com/" target="_blank">Read more</a>
+              </small>
+            </p>
+          </section>
+        </section>
+
+        <!-- Stencil Utitlity -->
+        <section>
+          <section
+            data-background="#ffffff"
+            data-background-iframe="https://stenciljs.com/docs/getting-started"
+            data-background-interactive
+          ></section>
+
+          <section
+            data-background="#ffffff"
+            data-background-iframe="https://stenciljs.com/docs/decorators"
+            data-background-interactive
+          ></section>
+
+          <section
+            data-background="#ffffff"
+            data-background-iframe="https://stenciljs.com/docs/component-lifecycle"
+            data-background-interactive
+          ></section>
+
+          <section
+            data-background="#ffffff"
+            data-background-iframe="https://stenciljs.com/docs/templating-jsx"
+            data-background-interactive
+          ></section>
+        </section>
+
+        <!-- Showcase -->
+        <section>
+          <section
+            data-background="https://media.giphy.com/media/tyqcJoNjNv0Fq/giphy.gif"
+          >
+            <h2><span class="ww-text-bg">Demo</span></h2>
+          </section>
+
+          <section
+            data-background-iframe="./content/demo/index.html"
+            data-background-interactive
+          ></section>
+
+          <section
+            data-background-iframe="./content/demo-2/index.html"
+            data-background-interactive
+          ></section>
+        </section>
+
+        <!-- Thank you -->
+        <section
+          data-background="https://media.giphy.com/media/KJ1f5iTl4Oo7u/giphy.gif"
+        ></section>
+
+        <section>
+          <p><span class="ww-text-bg">@WebworkerUnited</span></p>
+          <p><span class="ww-text-bg">webworker.com</span></p>
+          <br />
+          <small>@sebastianoley<br />sebastianoley.com</small>
+        </section>
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        dependencies: [
+          { src: "plugin/markdown/marked.js" },
+          { src: "plugin/markdown/markdown.js" },
+          { src: "plugin/notes/notes.js", async: true },
+          { src: "plugin/highlight/highlight.js", async: true }
+        ],
+        controlsTutorial: false,
+        hash: true,
+        history: true
+      });
+    </script>
+    <script src="./js/webworker.js"></script>
+  </body>
+</html>

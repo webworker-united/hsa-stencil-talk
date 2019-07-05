@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Webcomponents Demo</title>
+
+    <!-- load webcomponents in an html like this -->
+    <script src="./webcomponents/ww-switch.js"></script>
+    <script src="./webcomponents/ww-tab-selection.js"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Squada+One"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <!--
+        include custom elements like this.
+        they may have custom properties like 'initiallySelectedTab' (important: typed in snake-case in html).
+        they may also have custom events, like 'tabClicked'.
+      -->
+      <ww-tab-selection initially-selected-tab="cats"></ww-tab-selection>
+
+      <!--
+        custom elements do support 'slots'.
+        since slots are injected into the custom element, they are not part of the shadow dom.
+      -->
+      <ww-switch>
+        <div slot="cats">
+          <img
+            src="http://images.ctfassets.net/e43mbx7oxv8s/dTeQVZbR72uiYkEAYKyUS/bd3825a93aace2c7b368a7a742b1000f/000122_ZV_SCSW_HeroImages_1900x1024_D1.jpg"
+            alt="Cats"
+            class="cats"
+          />
+          <div class="description" id="cats-description"></div>
+        </div>
+        <div slot="dogs">
+          <img
+            src="http://s1.1zoom.me/big0/663/Dogs_White_background_Three_3_Chihuahua_514226_1280x801.jpg"
+            alt="Dogs"
+            class="dogs"
+          />
+          <div class="description" id="dogs-description"></div>
+        </div>
+        <div slot="mice">
+          <img
+            src="https://d2r55xnwy6nx47.cloudfront.net/uploads/2018/10/16Mice_1300lede.jpg"
+            alt="Mice"
+            class="mice"
+          />
+          <div class="description" id="mice-description"></div>
+        </div>
+      </ww-switch>
+    </div>
+
+    <script>
+      /* custom elements can be accessed in js
+           like any other html element */
+      const wwTabSelection = document.querySelector("ww-tab-selection");
+      const wwSwitch = document.querySelector("ww-switch");
+
+      /* you may also pass more complex data structures
+         to webcomponent properties like this */
+      wwTabSelection.config = {
+        tabs: [
+          {
+            title: "Cats",
+            key: "cats",
+            action: {
+              type: "CATS",
+              payload: { says: "meow", friends: ["Garfield", "Tom"] }
+            }
+          },
+          {
+            title: "Dogs",
+            key: "dogs",
+            action: {
+              type: "DOGS",
+              payload: { says: "woof", friends: ["Scooby-Doo"] }
+            }
+          },
+          {
+            title: "Mice",
+            key: "mice",
+            action: {
+              type: "MICE",
+              payload: { says: "squeak", friends: ["Jerry"] }
+            }
+          }
+        ]
+      };
+
+      /* ...and listen to custom events like you normally do */
+      wwTabSelection.addEventListener("tabClicked", $event => {
+        const tab = $event.detail;
+        wwSwitch.selectedSlot = tab.key;
+        setDescription(tab);
+      });
+
+      function setDescription(tab) {
+        const payload = tab.action.payload;
+        const friends = payload.friends.reduce((a, c) => `${a} and ${c}`);
+        const description = document.querySelector(`#${tab.key}-description`);
+        description.innerHTML = `We say ${payload.says} and our ${
+          payload.friends.length > 1 ? "friends are" : "friend is"
+        } ${friends}.`;
+      }
+    </script>
+  </body>
+</html>

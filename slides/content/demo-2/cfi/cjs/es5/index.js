@@ -1,0 +1,1 @@
+// ClientFacingImage: ES Module

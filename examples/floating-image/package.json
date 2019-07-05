@@ -1,0 +1,25 @@
+{
+  "name": "floating-image",
+  "version": "1.1.0",
+  "description": "A simple web component showing an image that changes orientation based on the cursor position.",
+  "author": "Sebastian Oley s.oley@me.com (http://sebastianoley.com)",
+  "module": "dist/esm/index.js",
+  "main": "dist/index.js",
+  "unpkg": "dist/ionic.js",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "stencil build --docs",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll"
+  },
+  "devDependencies": {
+    "@stencil/core": "0.18.1",
+    "@stencil/sass": "^0.1.1"
+  },
+  "license": "MIT"
+}

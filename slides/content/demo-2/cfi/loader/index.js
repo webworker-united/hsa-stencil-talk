@@ -1,0 +1,1 @@
+export * from '../esm/es5/client-facing-image.define.js';

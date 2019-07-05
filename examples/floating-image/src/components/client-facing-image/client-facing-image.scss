@@ -1,0 +1,30 @@
+@mixin round-borders() {
+  border-radius: 50%;
+}
+
+.cfi {
+  position: relative;
+
+  &__projector {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    border: solid 2px black;
+
+    &--round {
+      @include round-borders();
+    }
+  }
+
+  &__backdrop {
+    background-color: black;
+    border: solid 2px black;
+
+    &--round {
+      @include round-borders();
+    }
+  }
+}

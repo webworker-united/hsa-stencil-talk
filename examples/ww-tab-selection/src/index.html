@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>WW Tab Selection</title>
+    <script src="/build/ww-tab-selection.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Squada+One"
+      rel="stylesheet"
+    />
+    <style rel="stylesheet">
+      :root {
+        --tab-font-family: "Squada One", cursive;
+      }
+
+      body {
+        padding: 90px 30px 30px 30px;
+        margin: 0;
+        background: linear-gradient(to right, #85ba2f 0%, #145777 100%);
+        font-family: "Squada One", cursive;
+      }
+
+      h1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        color: white;
+        width: 100vw;
+        padding: 15px 30px;
+        margin: 0;
+      }
+
+      #output {
+        margin-top: 20px;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ww-tab-selection</h1>
+
+    <ww-tab-selection></ww-tab-selection>
+
+    <div id="output">
+      <span><i>select a tab...</i></span>
+    </div>
+
+    <script>
+      const output = document.querySelector("#output");
+      const tabSelection = document.querySelector("ww-tab-selection");
+      tabSelection.config = {
+        tabs: [
+          {
+            title: "Cats",
+            key: "cats",
+            action: {
+              type: "CATS",
+              payload: { says: "meow", friends: ["Garfield", "Tom"] }
+            }
+          },
+          {
+            title: "Dogs",
+            key: "dogs",
+            action: {
+              type: "DOGS",
+              payload: { says: "woof", friends: ["Scooby-Doo"] }
+            }
+          },
+          {
+            title: "Mice",
+            key: "mice",
+            action: {
+              type: "MICE",
+              payload: { says: "squeak", friends: ["Jerry"] }
+            }
+          }
+        ]
+      };
+      tabSelection.addEventListener("tabClicked", $event => {
+        const tab = $event.detail;
+        output.innerHTML = `
+          <span>tab.title: ${tab.title}</span>
+          <br />
+          <span>tab.key: ${tab.key}</span>
+          <br />
+          <span>tab.action: ${JSON.stringify(tab.action)}</span>
+        `;
+      });
+    </script>
+    <script>
+      const img = document.createElement("img");
+      img.src =
+        "https://webworker.com/wp-content/themes/webworker/assets/images/logos/ww-signet.png";
+      img.alt = "webworker logo";
+      img.style = `
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        height: 60px;
+        filter: invert(1);
+        cursor: pointer;
+      `;
+      img.addEventListener("click", () =>
+        window.open("https://webworker.com", "_blank")
+      );
+      document.querySelector("body").appendChild(img);
+    </script>
+  </body>
+</html>

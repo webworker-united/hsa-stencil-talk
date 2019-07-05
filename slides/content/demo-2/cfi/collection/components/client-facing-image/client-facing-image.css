@@ -1,0 +1,17 @@
+.cfi {
+  position: relative; }
+  .cfi__projector {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    border: solid 2px black; }
+    .cfi__projector--round {
+      border-radius: 50%; }
+  .cfi__backdrop {
+    background-color: black;
+    border: solid 2px black; }
+    .cfi__backdrop--round {
+      border-radius: 50%; }

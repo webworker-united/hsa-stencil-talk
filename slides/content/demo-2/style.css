@@ -1,0 +1,13 @@
+:root {
+  --tab-font-family: "Squada One", cursive;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  font-family: "Squada One", cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

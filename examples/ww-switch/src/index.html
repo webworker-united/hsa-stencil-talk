@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>WW Switch</title>
+    <script src="/build/ww-switch.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Squada+One"
+      rel="stylesheet"
+    />
+    <style rel="stylesheet">
+      body {
+        padding: 90px 30px 30px 30px;
+        margin: 0;
+        background: linear-gradient(to right, #85ba2f 0%, #145777 100%);
+        font-family: "Squada One", cursive;
+      }
+
+      h1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        color: white;
+        width: 100vw;
+        padding: 15px 30px;
+        margin: 0;
+      }
+
+      /* slots get injected into the webcomponent
+       * and are therefore not part of the shadow dom!
+       * that means you can actually style the paragraphs in a slot.
+       */
+      p {
+        font-size: 60px;
+        margin: 0;
+        padding: 20px 25px;
+        border: dashed 2px black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ww-switch</h1>
+
+    <ww-switch selected-slot="cats">
+      <p slot="cats">Cats</p>
+      <p slot="dogs">Dogs</p>
+      <p slot="mice">Mice</p>
+    </ww-switch>
+
+    <script>
+      const img = document.createElement("img");
+      img.src =
+        "https://webworker.com/wp-content/themes/webworker/assets/images/logos/ww-signet.png";
+      img.alt = "webworker logo";
+      img.style = `
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        height: 60px;
+        filter: invert(1);
+        cursor: pointer;
+      `;
+      img.addEventListener("click", () =>
+        window.open("https://webworker.com", "_blank")
+      );
+      document.querySelector("body").appendChild(img);
+    </script>
+  </body>
+</html>

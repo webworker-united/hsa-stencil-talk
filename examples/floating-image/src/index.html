@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Client Facing Image</title>
+    <script src="/build/client-facing-image.js"></script>
+    <style>
+      body {
+        margin: unset;
+        padding: unset;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <client-facing-image
+        url="http://www.tshirtterrorist.co.za/wp-content/uploads/2016/09/rick-steel-520.jpg"
+        width="120px"
+        height="120px"
+        round="true"
+        intensity="0.5"
+      ></client-facing-image>
+    </div>
+  </body>
+</html>

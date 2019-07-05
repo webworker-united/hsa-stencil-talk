@@ -1,0 +1,30 @@
+{
+  "tags": [
+    {
+      "label": "client-facing-image",
+      "description": "",
+      "attributes": [
+        {
+          "label": "height",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "round",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "url",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "width",
+          "description": "",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

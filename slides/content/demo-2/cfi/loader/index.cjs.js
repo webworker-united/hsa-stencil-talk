@@ -1,0 +1,1 @@
+module.exports = require('../cjs/es5/client-facing-image.define.js');

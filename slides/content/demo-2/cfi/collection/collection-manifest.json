@@ -1,0 +1,62 @@
+{
+  "components": [
+    {
+      "tag": "client-facing-image",
+      "dependencies": [],
+      "componentClass": "ClientFacingImage",
+      "componentPath": "components/client-facing-image/client-facing-image.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/client-facing-image/client-facing-image.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "height",
+          "type": "String",
+          "attr": "height"
+        },
+        {
+          "name": "round",
+          "type": "Boolean",
+          "attr": "round"
+        },
+        {
+          "name": "url",
+          "type": "String",
+          "attr": "url"
+        },
+        {
+          "name": "width",
+          "type": "String",
+          "attr": "width"
+        }
+      ],
+      "states": [
+        {
+          "name": "clientOffset"
+        }
+      ],
+      "listeners": [
+        {
+          "event": "window:mousemove",
+          "method": "handleMouseMove",
+          "capture": false
+        }
+      ],
+      "hostElement": {
+        "name": "element"
+      },
+      "shadow": true
+    }
+  ],
+  "collections": [],
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "0.18.1",
+    "typescriptVersion": "3.3.3"
+  },
+  "bundles": []
+}
